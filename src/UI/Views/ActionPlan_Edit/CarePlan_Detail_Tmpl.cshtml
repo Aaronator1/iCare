@@ -1,0 +1,146 @@
+﻿@{
+
+    using (var template = Html.Incoding().Template<GetActionPlanDetailQuery.Response>())
+    {
+        using (var each = template.ForEach())
+        {
+            <div class="box box-primary">
+                <div class="box-header bg-light-blue" >
+                    <i class="ion ion-clipboard"></i>
+                                   <h3 class="box-title">@each.For(r=>r.Patient) /  @each.For(r => r.Date)</h3>
+
+                </div><!-- /.box-header -->
+                <div class="box-body bg-light-blue">
+                    <ul class="todo-list">
+                        <li>
+                            <div class="box-body">                                
+                                <span class="text pull-left text-caption">Reminders</span>
+                                        @(Html.When(JqueryBind.Click)
+                                      .AjaxGet(Url.Dispatcher().Model(new  AddAnswerOnReminderToActionPlanCommand()
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),                                                                                  
+                                                                          }).AsView("~/Views/Reminders/Add.cshtml"))
+                                      .OnSuccess(r =>
+                                                     {
+                                                         r.WithId("dialog").Core().Insert.Html();
+                                                         r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Reminder");
+                                                     })
+                                      .AsHtmlAttributes(new { @class = "btn btn-default pull-right" })
+                                      .ToButton(@<text>
+                                                     <i class="fa fa-plus"></i> Add item
+                                                 </text>))
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="box-body">                                
+                                @(Html.When(JqueryBind.InitIncoding)
+                                      .AjaxGet(Url.Dispatcher().Query(new GetRemindersQuery { ActionPlanId = each.For(r => r.Id) }).AsJson())
+                                      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan_Edit/Reminder_Tmpl.cshtml")).Html())
+                                      .AsHtmlAttributes(new {@class="activeElement"})
+                                      .ToDiv())                                        
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box-body">
+                                <div>
+                                    <span class="text pull-left text-caption">Monitorings</span>
+                                </div>
+                                    @(Html.When(JqueryBind.Click)
+                                      .AjaxGet(Url.Dispatcher().Model(new  AddOrEditMonitoringCommand()
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),                                                                                  
+                                                                          }).AsView("~/Views/Monitoring/Add.cshtml"))
+                                      .OnSuccess(r =>
+                                                     {
+                                                         r.WithId("dialog").Core().Insert.Html();
+                                                         r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Monitoring");
+                                                     })
+                                      .AsHtmlAttributes(new { @class = "btn btn-default pull-right" })
+                                      .ToButton(@<text>
+                                                     <i class="fa fa-plus"></i> Add item
+                                                 </text>))
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                            <div class="box-body">                                
+                                @(Html.When(JqueryBind.InitIncoding)
+                                      .AjaxGet(Url.Dispatcher().Query(new GetMonitoringsQuery { ActionPlanId = each.For(r => r.Id) }).AsJson())
+                                      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan_Edit/Monitoring_Tmpl.cshtml")).Html())
+                                      .AsHtmlAttributes(new {@class="activeElement"})
+                                      .ToDiv())                                        
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box-body">
+                                <!-- todo text -->
+                                <span class="text pull-left text-caption">Appointments</span>
+                                @(Html.When(JqueryBind.Click)
+                                      .AjaxGet(Url.Dispatcher().Model(new AddOrEditAppointmentCommand
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),
+                                                                                  IsCareTeam = false
+                                                                          }).AsView("~/Views/Appointment/Add.cshtml"))
+                                      .OnSuccess(r =>
+                                                     {
+                                                         r.WithId("dialog").Core().Insert.Html();
+                                                         r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Appointment");
+                                                     })
+                                      .AsHtmlAttributes(new { @class = "btn btn-default pull-right" })
+                                      .ToButton(@<text>
+                                                     <i class="fa fa-plus"></i> Add item
+                                                 </text>))
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="box-body">                                
+                                @(Html.When(JqueryBind.InitIncoding)
+                                      .AjaxGet(Url.Dispatcher().Query(new GetAppointmentsQuery
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),
+                                                                                  IsCarePlan = false
+                                                                          }).AsJson())
+                                      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan_Edit/Appointements_Tmpl.cshtml")).Html())
+                                      .AsHtmlAttributes(new {@class="activeElement"})
+                                      .ToDiv())    
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box-body">
+                                <!-- todo text -->
+                                <span class="text pull-left text-caption">Care Teams</span>
+                                @(Html.When(JqueryBind.Click)
+                                      .AjaxGet(Url.Dispatcher().Model(new AddOrEditAppointmentCommand
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),
+                                                                                  IsCareTeam = true
+                                                                          }).AsView("~/Views/Appointment/Add.cshtml"))
+                                      .OnSuccess(r =>
+                                                     {
+                                                         r.WithId("dialog").Core().Insert.Html();
+                                                         r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Care Team");
+                                                     })
+                                      .AsHtmlAttributes(new { @class = "btn btn-default pull-right" })
+                                      .ToButton(@<text>
+                                                     <i class="fa fa-plus"></i> Add item
+                                                 </text>))
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="box-body">                                
+                                @(Html.When(JqueryBind.InitIncoding)
+                                      .AjaxGet(Url.Dispatcher().Query(new GetAppointmentsQuery
+                                                                          {
+                                                                                  ActionPlanId = each.For(r => r.Id),
+                                                                                  IsCarePlan = true
+                                                                          }).AsJson())
+                                      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan_Edit/CareTeam_Tmpl.cshtml")).Html())
+                                      .AsHtmlAttributes(new {@class="activeElement"})
+                                      .ToDiv())    
+                            </div>
+                        </li>
+
+						
+                    </ul>
+                </div><!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        }
+    }
+}

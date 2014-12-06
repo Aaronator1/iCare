@@ -1,0 +1,19 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetRemindersQuery.Response>())
+    {
+ 
+        <table class="table table-bordered table-reminders">
+
+            @using (var each = template.ForEach())
+            {
+                Func<bool, MvcHtmlString> createChk = s => Html.CheckBox("58C3D50C-A622-4396-8E55-6F29059260C7", s, Html.When(JqueryBind.Change)
+                                                                                                                        .AjaxPost(Url.Dispatcher().Push(new ToggleAnswerOnReminderToActionPlanCommand { Id = each.For(r => r.Id) }))
+                                                                                                                        .AsHtmlAttributes());
+                <tr>
+                    <th>@each.Inline(r => r.Value, createChk(true), createChk(false))</th>
+                    <th>@each.For(r => r.Title)</th>
+                </tr>
+            }
+        </table>
+    }
+}

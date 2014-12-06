@@ -1,0 +1,15 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetAppointmentsQuery.Response>())
+    {
+        <table class="table table-bordered">
+            @using (var each = template.ForEach())
+            {
+                <tr>                   
+                    <th>@each.For(r => r.Staff)</th>
+                    <th>@each.For(r => r.Name)</th>
+                    <th>@each.For(r => r.Phone)</th>
+                </tr>
+            }
+        </table>
+    }
+}

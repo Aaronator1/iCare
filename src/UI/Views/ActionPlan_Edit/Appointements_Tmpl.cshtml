@@ -1,0 +1,38 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetAppointmentsQuery.Response>())
+    {
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 40px">
+                        
+                </td>
+                <td>Date</td>
+                <td>Name</td>
+                <td>Phone</td>                    
+                <td >Address
+                </td>
+                 
+            </tr>
+
+            @using (var each = template.ForEach())
+            {
+                Func<bool, MvcHtmlString> createChk = s => Html.CheckBox("58C3D50C-A622-4396-8E55-6F29059260C7", s, Html.When(JqueryBind.Change)
+                                                                                                                        .AjaxPost(Url.Dispatcher().Push(new ToggleAppointmentOnReminderToActionPlanCommand { Id = each.For(r => r.Id) }))
+                                                                                                                        .AsHtmlAttributes());
+                <tr>
+                    <td style="width: 40px">
+                        @each.Inline(r => r.Checked, createChk(true), createChk(false))
+                    </td>
+                    <td>@each.For(r => r.Date)</td>
+                    <td>@each.For(r => r.Name)</td>
+                    <td>@each.For(r => r.Phone)</td>
+                    
+                    <td >@each.For(r => r.Address) Phone @each.For(r => r.Phone)
+                        <a href="@each.For(r => r.Map)">Map</a>
+                    </td>
+                 
+                </tr>
+            }
+        </table>
+    }
+}

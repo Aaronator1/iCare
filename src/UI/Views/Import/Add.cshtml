@@ -1,0 +1,38 @@
+﻿@model List<GetAccountsQuery.Response>
+
+@using (Html.BeginForm("SetValuesOnMOnitoring", "Home", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td style="width: 120px;">Patient Name</td>
+            <td style="width: 170px;">Monitoring Type</td>
+            <td style="width: 170px;">Value</td>
+        </tr>
+        
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                @Html.HiddenFor(r=>r[i].Id)
+                <td>@Html.TextBoxFor(r=>r[i].Last, new {@readonly="readonly", style="border: none;"})</td>
+                <td>@Html.DropDownListFor(r=>r[i].Monitortype, typeof(Monitoring.MonitorOfType).ToSelectList(), new { style="width: 150px;" })</td>
+                <td>@Html.TextBoxFor(r=>r[i].Value, new { style="width: 150px;" })</td>
+            </tr>
+           
+        }
+    </table>
+    <div class="clearfix"></div>
+    <hr/>
+     @(Html.When(JqueryBind.Click)
+     .PreventDefault()
+     .StopPropagation()
+     .Direct()
+     .OnSuccess(dsl => dsl.WithId("dialog").JqueryUI().Dialog.Close())
+     .AsHtmlAttributes(new { @class="btn btn-danger btn-lg"})
+     .ToButton("Cancel"))
+    <input type="submit" class="btn btn-primary btn-lg" value="Save" />
+}
+
+
+
+
+

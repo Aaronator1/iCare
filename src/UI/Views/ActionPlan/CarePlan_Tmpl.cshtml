@@ -1,0 +1,21 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetActionPlansQuery.Response>())
+    {
+        using (var each = template.ForEach())
+        {
+            <div class="row">
+                <div class="col-lg-3 ">
+                    <!-- small box -->
+                    <div class="small-box @each.Inline(r => r.IsFirst, "bg-aqua", "bg-green")">
+                        <div class="inner">
+                            <h4> @each.For(r => r.Date) </h4>
+                        </div>               
+                        <a class="small-box-footer" href="@Url.Dispatcher().AsView("~/Views/ActionPlan/Index_Detail.cshtml").AppendToQueryString(new{Id = each.For(r=>r.Id) })">
+                            Care Plan Details <i class="fa fa-arrow-circle-right"></i> 
+                        </a>                          
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

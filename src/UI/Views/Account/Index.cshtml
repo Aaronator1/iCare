@@ -1,0 +1,49 @@
+﻿@using Domain.Operation
+@using Grid.Extensions
+@{
+    Layout = "~/Views/Shared/_Content.cshtml";
+}
+@section Title
+{
+Personals
+}
+
+@section Body
+{
+    @(Html.When(JqueryBind.Click)
+          .AjaxGet(Url.Dispatcher().Query(new AddOrEditAccountCommand { Type = Account.AccountOfType.Staff }).AsView("~/Views/Patient/Add.cshtml"))
+          .OnSuccess(r =>
+                         {
+                             r.WithId("dialog").Core().Insert.Html();
+                             r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Personals");
+                         })
+          .AsHtmlAttributes(new {@class="btn btn-default pull-right"})
+          .ToButton(@<text>
+                             <i class="fa fa-plus"></i> Add item
+                         </text>))
+    @(Html.Grid<GetAccountsQuery.Response>()
+          .Name(typeof(GetAccountsQuery).Name)
+          .Columns(clm =>
+                   {
+                       clm.Bound(r => r.Id).HtmlAttr(new RouteValueDictionary { { "data-type-col", "id" }, { "class", "hide" } }).HeaderHtmlAttr(new RouteValueDictionary { { "class", "hide" } });
+                       clm.Template(@<text>
+                                         @(Html.When(JqueryBind.Click)
+                                               .AjaxGet(Url.Dispatcher().Query(new GetAccountQuery()
+                                                                                   {
+                                                                                       Id = Selector.Jquery.Self().Closest(HtmlTag.Tr).Find(selector => selector.ContainsAttribute("data-type-col", "id")),
+                                                                                       Type = Account.AccountOfType.Staff
+                                                                                   }).AsView("~/Views/Patient/Add.cshtml"))
+                                               .OnSuccess(r =>
+                                                              {
+                                                                  r.WithId("dialog").Core().Insert.Html();
+                                                                  r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Edit Personals");
+                                                              })
+                                               .AsHtmlAttributes(new { @class = "glyphicon glyphicon-edit iconActive" })
+                                               .ToTag(HtmlTag.Span))
+                                     </text>).HeaderHtmlAttr(new RouteValueDictionary { { "class", "editCell" } }).HtmlAttr(new RouteValueDictionary { { "class", "editCell" } });
+                       clm.Bound(r => r.Email);
+                       clm.Bound(r => r.First);
+                       clm.Bound(r => r.Last);
+                   })
+          .AjaxGet(Url.Dispatcher().Query(new GetAccountsQuery() { Type = Account.AccountOfType.Staff }).AsJson()))
+}

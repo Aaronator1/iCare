@@ -1,0 +1,53 @@
+﻿@using Domain.Persistence
+@model AddOrEditAppointmentCommand
+@using (Html.Hack().BeginForm(setting =>
+                                  {
+                                      setting.CloseDialog = true;
+                                      setting.TriggerTo = Selector.Jquery.Class("activeElement");
+                                  }))
+{
+    @Html.For(r => r.Id).Hidden()
+    @Html.For(r => r.ActionPlanId).Hidden()
+    @Html.HiddenFor(r => r.IsCareTeam)
+    if (Model.IsCareTeam)
+    {
+    @Html.ForGroup(r => r.Staff).DropDown(control =>
+                                                  {
+                                                      control.Input.Data = new List<KeyValueVm>
+                                                                               {
+                                                                                       new KeyValueVm("PCP"),
+                                                                                       new KeyValueVm("Pediatriction"),
+                                                                                       new KeyValueVm("Cordioligist"),
+                                                                               }.ToSelectList();
+                                                  })
+
+    }
+    else
+    {
+    @Html.ForGroup(r => r.Date).TextBox(control => control.Input.AddClass("input-date"))
+    }
+    @Html.ForGroup(r => r.Name).TextBox()
+    @Html.ForGroup(r => r.Address).TextBox()
+    <div class="control-group">
+        <label class="control-label control-label"></label>
+        <div class="controls">
+            @Html.For(r => r.Address1).TextBox(control => control.SetAttr(HtmlAttribute.Style, "width:90px;"))
+            @Html.For(r => r.State).DropDown(control =>
+                                                  {
+                                                      control.Data = typeof(States).ToSelectList();
+                                                  })
+            @Html.For(r => r.Address2).TextBox(control => control.SetAttr(HtmlAttribute.Style, "width:54px;"))
+        </div>
+    </div>
+    @Html.ForGroup(r => r.Phone).TextBox()
+    <div class="clearfix"></div>
+    <hr />
+    @(Html.When(JqueryBind.Click)
+          .PreventDefault()
+          .StopPropagation()
+          .Direct()
+          .OnSuccess(dsl => dsl.WithId("dialog").JqueryUI().Dialog.Close())
+          .AsHtmlAttributes(new { @class = "btn btn-danger btn-lg" })
+          .ToButton("Cancel"))
+    <input type="submit" class="btn btn-primary btn-lg" value="Save" />
+}

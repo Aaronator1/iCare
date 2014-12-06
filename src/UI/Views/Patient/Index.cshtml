@@ -1,0 +1,58 @@
+﻿@using Domain.Operation
+@using Grid.Extensions
+@using NHibernate.Exceptions
+@{
+    Layout = "~/Views/Shared/_Content.cshtml";
+}
+@section Title
+{
+    Patients
+}
+
+@section Body
+{
+    
+    @(Html.When(JqueryBind.Click)
+          .AjaxGet(Url.Dispatcher().Query(new AddOrEditAccountCommand { Type = Account.AccountOfType.Patient }).AsView("~/Views/Patient/Add.cshtml"))
+          .OnSuccess(r =>
+                         {
+                             r.WithId("dialog").Core().Insert.Html();
+                             r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Patient");
+                         })
+          .AsHtmlAttributes(new {@class="btn btn-default pull-right"})
+          .ToButton(@<text>
+                             <i class="fa fa-plus"></i> Add item
+                         </text>))
+
+
+    @(Html.Grid<GetAccountsQuery.Response>()
+          .Name(typeof(GetAccountsQuery).Name + 1)
+          .Columns(clm =>
+                       {
+                           clm.Bound(r => r.Id).HtmlAttr(new RouteValueDictionary { { "data-type-col", "id" }, { "class", "hide" } }).HeaderHtmlAttr(new RouteValueDictionary { { "class", "hide" } });
+                       clm.Template(@<text>
+                                         @(Html.When(JqueryBind.Click)
+                                               .AjaxGet(Url.Dispatcher().Query(new GetAccountQuery()
+                                                                                   {
+                                                                                           Id = Selector.Jquery.Self().Closest(HtmlTag.Tr).Find(selector => selector.ContainsAttribute("data-type-col", "id")),
+                                                                                           Type = Account.AccountOfType.Patient
+                                                                                   }).AsView("~/Views/Patient/Add.cshtml"))
+                                               .OnSuccess(r =>
+                                                              {
+                                                                  r.WithId("dialog").Core().Insert.Html();
+                                                                  r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Edit Patient");
+                                                              })
+                                               .AsHtmlAttributes(new { @class = "glyphicon glyphicon-edit iconActive" })
+                                               .ToTag(HtmlTag.Span))
+                                     </text>).HeaderHtmlAttr(new RouteValueDictionary { { "class", "editCell" } }).HtmlAttr(new RouteValueDictionary { { "class", "editCell" } });
+                           clm.Bound(r => r.Email);
+                           clm.Bound(r => r.First);
+                           clm.Bound(r => r.Last);
+                           clm.Template(@<text>
+                                             <a href="@Url.Action("Index","Home").SetHash(Url.Dispatcher().Model(new GetActionPlanDetailQuery(){Id = item.For(r=>r.ActionPlanId)}).AsView("~/Views/ActionPlan_Edit/Index.cshtml"))">
+                                                 Edit Care Plan
+                                             </a>
+                                         </text>);
+                       })
+          .AjaxGet(Url.Dispatcher().Query(new GetAccountsQuery { Type = Account.AccountOfType.Patient }).AsJson()))  
+}

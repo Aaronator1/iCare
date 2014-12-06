@@ -1,0 +1,99 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $.fn.extend({
+        menu: function (currentHash) {
+            $(this).each(function () {
+                if (decodeURIComponent(this.href).contains(currentHash)) {
+                    $(this).closest('ul').find('li').removeClass('active');
+                    $(this).closest('li').addClass('active');
+                    return false;
+                }
+            });
+
+            return this;
+        }
+    });
+
+    function ApplyStyle() {
+        $('.input-date').datepicker();
+    }
+</script>
+<header class="header">
+    <a href="javascript:void();" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        iCare 
+    </a>
+    <nav class="navbar navbar-static-top"></nav>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="@Url.Content("~/Content/img/avatar3.png")" class="img-circle" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p>@HttpContext.Current.User.Identity.Name</p>
+
+                    <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
+                </div>
+            </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li>                
+                <a href="@Url.Action("Index", "Home").SetHash(Url.Dispatcher().AsView("~/Views/Account/Index.cshtml"))">
+                    <i class="fa fa-users"></i> <span>Personals</span>
+                </a>
+            </li>                      
+            <li>                
+                <a href="@Url.Action("Index", "Home").SetHash(Url.Dispatcher().AsView("~/Views/Patient/Index.cshtml"))">
+                    <i class="fa fa-users"></i> <span>Patients</span>
+                </a>
+            </li>                                                                                       
+            <li>                
+                <a href="@Url.Dispatcher().AsView("~/Views/ActionPlan/Index.cshtml")">
+                    <i class="fa fa-heart"></i> <span>UI</span>
+                </a>
+            </li> 
+            <li>
+                <a href="@Url.Action("Index", "Home").SetHash(Url.Dispatcher().AsView("~/Views/Import/Index.cshtml"))">                
+                    <i class="fa fa-arrow-up"></i> <span>Import Data</span>
+                </a>
+            </li>                      
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+    @(Html.When(JqueryBind.IncInsert)
+          .Direct()
+          .OnSuccess(dsl => dsl.Self().Core().Call("ApplyStyle"))
+          .When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
+          .AjaxHashGet()
+          .OnBegin(dsl =>
+                       {
+                           var firstA = Selector.Jquery.Class("sidebar-menu").Find(s => s.Tag(HtmlTag.A).Expression(JqueryExpression.First)).Attr(HtmlAttribute.Href);
+                           dsl.Utilities.Document.RedirectTo(firstA).If(() => Selector.Incoding.HashUrl().IsEmpty());
+                       })
+          .OnSuccess(dsl =>
+                         {
+                             dsl.Self().Core().Insert.Html();
+                             dsl.With(Selector.Jquery.Class("sidebar-menu").Find(HtmlTag.A)).Core().JQuery.Call("menu", Selector.Incoding.HashQueryString("incView"));
+                         })
+          .AsHtmlAttributes(new { @class = "right-side" })
+          .ToTag(HtmlTag.Aside))
+    <div id="dialog"></div>
+</div>

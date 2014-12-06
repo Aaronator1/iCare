@@ -1,0 +1,24 @@
+Message by 12/6/2014 10:19:30 AM:Date:12/6/2014 10:19:30 AM
+Body:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41
+
+Exception by 12/6/2014 10:19:30 AM:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41
+Message by 12/6/2014 10:19:31 AM:Date:12/6/2014 10:19:31 AM
+Body:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41
+
+Exception by 12/6/2014 10:19:31 AM:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41
+Message by 12/6/2014 10:19:38 AM:Date:12/6/2014 10:19:38 AM
+Body:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41
+
+Exception by 12/6/2014 10:19:38 AM:System.Net.WebException: The remote server returned an error: (504) Gateway Timeout.
+   at System.Net.HttpWebRequest.GetResponse()
+   at Domain.StartMonitoringCommand.<Execute>b__0(String message) in c:\Users\smitha\Google Drive\Workspaces\Kiln\Hackathon---Team-3\src\Domain\Operation\API\StartMonitoringCommand.cs:line 41

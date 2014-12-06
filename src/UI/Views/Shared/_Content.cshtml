@@ -1,0 +1,17 @@
+@{
+    var title = RenderSection("Title").ToHtmlString();
+}
+<section class="content-header">
+    <h1>
+        @title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">
+            @title
+        </li>
+    </ol>
+</section>    
+<section class="content">
+    @RenderSection("Body")
+</section>

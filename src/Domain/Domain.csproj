@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3C64C9CC-1CF3-4025-B5E0-9DD76795F136}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Domain</RootNamespace>
+    <AssemblyName>Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation-Signed.5.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc">
+      <HintPath>..\packages\FluentValidation.MVC3-Signed.5.0.0.3\lib\Net40\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Incoding">
+      <HintPath>..\packages\Incoding.Framework.1.3.0.789-beta\lib\net40\Incoding.dll</HintPath>
+    </Reference>
+    <Reference Include="Incoding.MetaLanguageContrib">
+      <HintPath>..\packages\Incoding.MetaLanguage.Contrib.1.3.0.82-beta\lib\Incoding.MetaLanguageContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\packages\JetBrains.Annotations.7.0\lib\net45\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.1.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\Bootstrapper.cs" />
+    <Compile Include="Operation\AddAnswerOnReminderToActionPlanCommand.cs" />
+    <Compile Include="Operation\AddOrEditAccountCommand.cs" />
+    <Compile Include="Operation\AddOrEditAppointmentCommand.cs" />
+    <Compile Include="Operation\AddOrEditMedicationCommand.cs" />
+    <Compile Include="Operation\AddOrEditMonitoringCommand.cs" />
+    <Compile Include="Operation\AddValueOfMonitoringToActionPlanCommand.cs" />
+    <Compile Include="Operation\API\GetActionPlanDetailQueryTmpl.cs" />
+    <Compile Include="Operation\API\GetMonitoringsQuery.cs" />
+    <Compile Include="Operation\API\GetNotificationQuery.cs" />
+    <Compile Include="Operation\API\GetRemindersQuery.cs" />
+    <Compile Include="Operation\API\MakrNotifcationCommand.cs" />
+    <Compile Include="Operation\API\StartMonitoringCommand.cs" />
+    <Compile Include="Operation\GetAccountQuery.cs" />
+    <Compile Include="Operation\GetEditActionPlanCommandAsQuery.cs" />
+    <Compile Include="Operation\GetValueOnMonitorQuery.cs" />
+    <Compile Include="Operation\SetValueOnMonitoringCommand.cs" />
+    <Compile Include="Operation\Share\IsActualUserQuery.cs" />
+    <Compile Include="Operation\ToggleAnswerOnReminderToActionPlanCommand.cs" />
+    <Compile Include="Operation\ToggleAppointmentOnReminderToActionPlanCommand.cs" />
+    <Compile Include="Persistence\AnswerOnReminder.cs" />
+    <Compile Include="Persistence\Monitoring.cs" />
+    <Compile Include="Persistence\Notification.cs" />
+    <Compile Include="Persistence\States.cs" />
+    <Compile Include="Persistence\ValueOnMonitor.cs" />
+    <Compile Include="Specification\AppointmentByActionPlanWhereSpec.cs" />
+    <Compile Include="Operation\API\GetActionPlanDetailQuery.cs" />
+    <Compile Include="Operation\API\GetAppointmentsQuery.cs" />
+    <Compile Include="Operation\API\GetMedicationsQuery.cs" />
+    <Compile Include="Specification\MedicationByActionPlanWhereSpec.cs" />
+    <Compile Include="Operation\GetAllActionPlansQuery.cs" />
+    <Compile Include="Operation\Share\GetCurrentUserIdQuery.cs" />
+    <Compile Include="Operation\GetAccountsQuery.cs" />
+    <Compile Include="Operation\API\GetActionPlansQuery.cs" />
+    <Compile Include="Persistence\Appointment.cs" />
+    <Compile Include="Persistence\ActionPlan.cs" />
+    <Compile Include="Operation\AddOrEditCarePlanCommand.cs" />
+    <Compile Include="Persistence\Medication.cs" />
+    <Compile Include="Setup\InitCarePlan.cs" />
+    <Compile Include="Setup\InitDataBase.cs" />
+    <Compile Include="Setup\InitAccount.cs" />
+    <Compile Include="Specification\AccountByEmailWhereSpec.cs" />
+    <Compile Include="Specification\AccountByPasswordWhereSpec.cs" />
+    <Compile Include="Operation\API\SignInAccountCommand.cs" />
+    <Compile Include="Persistence\Account.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specification\AccountByTypeWhereSpec.cs" />
+    <Compile Include="Specification\ActionPlanByPatientWhereSpec.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

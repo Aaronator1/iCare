@@ -1,0 +1,24 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetMonitoringsQuery.Response>())
+    {        
+        <table class="table table-bordered table-monitorings">
+            <tr>
+                <th></th>
+                <th>Type</th>
+                <th>Max</th>
+                <th>Min</th>
+            </tr>
+            @using (var each = template.ForEach())
+            {
+                <tr>
+                    <th>
+                        <div class="indicator @each.For(r => r.Status)"></div>
+                    </th>
+                    <th>@each.For(r => r.Type)</th>
+                    <th>@each.For(r => r.Max)</th>
+                    <th>@each.For(r => r.Min)</th>
+                </tr>
+            }
+        </table>
+    }
+}

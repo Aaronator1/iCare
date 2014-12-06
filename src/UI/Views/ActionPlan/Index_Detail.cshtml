@@ -1,0 +1,174 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<script>
+    function ApplyStyle() {
+        $('.input-date').datepicker();
+    }
+</script>
+<body class="skin-blue">
+    @*        @(Html.When(JqueryBind.InitIncoding)
+          .AjaxGet(Url.Dispatcher().Query(new GetNotificationQuery()).AsJson())
+          .OnSuccess(dsl =>
+                         {
+                             dsl.Utilities.Window.Alert("You have new notification").If(builder => builder.Not.Data<GetNotificationQuery.Response>(r => r.Items.IsEmpty()));
+                             string res = "6CC859A4-5B7F-4D86-B221-952680317403";
+                             dsl.Self().Core().Trigger.Incoding().Interval(100, out res);
+                         })
+          .AsHtmlAttributes()
+          .ToDiv())*@
+
+    <!-- Page Content -->
+
+    <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        <a href="@Url.Action("Index", "Home")" class="logo"> <!-- Add the class icon to your logo image or logo icon to add the margining --> iCare  </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            @(Html.When(JqueryBind.Click)
+                  .AjaxPost(Url.Dispatcher().Push(new StartMonitoringCommand()
+                  {
+                      ActionPlanId = Selector.Incoding.QueryString("Id")
+                  }))
+                  .OnSuccess(dsl => { })
+                  .AsHtmlAttributes(new { @class = "navbar-btn sidebar-toggle" })
+                  .ToLink(@<text>
+                               <span class="sr-only">
+                                   Toggle navigation
+                               </span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                           </text>))
+            
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-envelope"></i> <span class="label label-success">4</span> </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                You have 4 messages
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <!-- start message -->
+                                        <a href="#">
+                                            <div class="pull-left">
+                                                <img src="img/avatar3.png" class="img-circle" alt="User Image"/>
+                                            </div> <h4> Care Navigator <small><i class="fa fa-clock-o"></i> 5 mins</small></h4>
+                                            <p>
+                                                Don't forget about your appointment tomorrow.  Do you have everything ready?
+                                            </p> </a>
+                                    </li><!-- end message -->
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left">
+                                                <img src="img/avatar2.png" class="img-circle" alt="user image"/>
+                                            </div> <h4> Dr Smith <small><i class="fa fa-clock-o"></i> 2 hours</small></h4>
+                                            <p>
+                                                Hi Aaron.  I see you missed your follow-up today.  Please call 214-555-5555 to schedule a new one.
+                                            </p> </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="#">See All Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-warning"></i> <span class="label label-warning">2</span> </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                You have 2 notifications
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#"> <i class="fa fa-warning danger"></i>You missed your appointment with Dr. Smith</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"> <i class="fa fa-users warning"></i> You have not weighed in two days.</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Tasks: style can be found in dropdown.less -->
+                    <li class="dropdown tasks-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-tasks"></i> <span class="label label-danger">9</span> </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                You have 9 tasks
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <!-- Task item -->
+                                        <a href="#"> <h3> Design some buttons <small class="pull-right">20%</small></h3>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">20% Complete</span>
+                                                </div>
+                                            </div> </a>
+                                    </li><!-- end task item -->
+                                    <li>
+                                        <!-- Task item -->
+                                        <a href="#"> <h3> Create a nice theme <small class="pull-right">40%</small></h3>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">40% Complete</span>
+                                                </div>
+                                            </div> </a>
+                                    </li><!-- end task item -->
+                                    <li>
+                                        <!-- Task item -->
+                                        <a href="#"> <h3> Some task I need to do <small class="pull-right">60%</small></h3>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">60% Complete</span>
+                                                </div>
+                                            </div> </a>
+                                    </li><!-- end task item -->
+                                    <li>
+                                        <!-- Task item -->
+                                        <a href="#"> <h3> Make beautiful transitions <small class="pull-right">80%</small></h3>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">80% Complete</span>
+                                                </div>
+                                            </div> </a>
+                                    </li><!-- end task item -->
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="#">View all tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- Page Content -->
+    <div id="page1">                         
+        @(Html.When(JqueryBind.IncInsert)
+              .Direct()
+              .OnSuccess(dsl => dsl.Self().Core().Call("ApplyStyle"))
+              .When(JqueryBind.InitIncoding | JqueryBind.IncChangeUrl)
+              .AjaxGet(Url.Dispatcher().Query(new GetActionPlanDetailQuery
+                                                  {
+                                                          Id = Selector.Incoding.QueryString("Id")
+                                                  }).AsJson())
+              .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan/CarePlan_Detail_Tmpl.cshtml")).Html())
+              .AsHtmlAttributes(new { @class = "content", style = "display:block" })
+              .ToTag(HtmlTag.Section))
+    </div>
+    <div id="dialog"></div>
+</body>

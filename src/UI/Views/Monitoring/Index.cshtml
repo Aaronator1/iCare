@@ -1,0 +1,35 @@
+﻿@using Grid.Extensions
+@using Incoding.CQRS
+@{
+    Layout = "~/Views/Shared/_Content.cshtml";
+}
+@section Title
+{
+    Monitorings
+}
+
+@section Body
+{
+                                    
+    @(Html.When(JqueryBind.Click)
+                     .AjaxGet(Url.Dispatcher().Query(new AddOrEditMonitoringCommand()).AsView("~/Views/Monitoring/Add.cshtml"))
+                     .OnSuccess(r =>
+                                    {
+                                        r.WithId("dialog").Core().Insert.Html();
+                                        r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Add Monitor");                                        
+                                    })
+              .AsHtmlAttributes(new {@class="btn btn-default pull-right"})
+              .ToButton(@<text>
+                             <i class="fa fa-plus"></i> Add item
+                         </text>))
+
+    @(Html.Grid<Monitoring>()
+          .Name(typeof(Monitoring).Name)
+          .Columns(clm =>
+                   {
+                       clm.Bound(r => r.TypeName);
+                       clm.Bound(r => r.Max);
+                       clm.Bound(r => r.Min);
+                   })
+          .AjaxGet(Url.Dispatcher().Query(new GetEntitiesQuery<Monitoring>()).AsJson()))  
+}

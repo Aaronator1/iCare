@@ -1,0 +1,19 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetRemindersQuery.Response>())
+    {
+        using (var each = template.ForEach())
+        {
+            <div class="plan-content-item">
+                <div class="checkbox-item pull-right">
+                    @each.For(r => r.Title)
+                </div>
+                    @(Html.When(JqueryBind.Click)
+                          .AjaxPost(Url.Dispatcher().Push(new ToggleAnswerOnReminderToActionPlanCommand { Id = each.For(r => r.Id) }))
+                          .OnSuccess(dsl => dsl.Self().Core().JQuery.Attributes.ToggleClass("active"))
+                          .AsHtmlAttributes(new { @class = "art-checkbox " + @each.IsInline(r => r.Value, "active") + " pull-right" })
+                          .ToDiv())                     
+                <div class="clearfix"></div>
+            </div>
+        }
+    }
+}

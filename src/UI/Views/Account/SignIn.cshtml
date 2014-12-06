@@ -1,0 +1,61 @@
+﻿@model SignInAccountCommand
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel='stylesheet' type="text/css" href="~/Content/css/project.css"/>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900,100italic,300italic,400italic,500italic,700italic,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+<!-- ========================================================= SIGN IN PAGE ============================================================== -->
+
+<div class="page-signin">
+    <h1 class="caption1">Be beautiful!</h1>
+    <h2 class="caption1">Watch your weight!</h2>
+
+    <h1 class="caption2">Appreciate your health!</h1>
+    <h2 class="caption2">Do not forget to follow the blood pressure!</h2>
+
+    <h1 class="caption3">Take care of your children!</h1>
+    <h2 class="caption3">Watch out for their health, growth and development!</h2>
+
+    <h1 class="caption4">Aim for victory!</h1>
+    <h2 class="caption4">Build plans and conquer new heights!</h2>
+
+    <div class="pagebg-01"></div>
+    <div class="pagebg-02"></div>
+    <div class="pagebg-03"></div>
+    <div class="pagebg-04"></div>
+
+    <div class="form-box" id="login-box">
+        <div class="header">Sign In</div>
+        @using (Html.Hack().BeginForm(setting => { setting.RedirectTo = Url.Action("Index", "Home"); }))
+        {
+            <div class="body bg-gray">
+                <div class="form-group">
+                    @Html.For(r => r.Email).TextBox(control =>
+                                                        {
+                                                            control.Placeholder = "Your Email";
+                                                            control.AddClass("form-control");
+                                                        })                
+                </div>
+                <div class="form-group">
+                    @Html.For(r => r.Password).Password(control => control.AddClass("form-control"))                    
+                </div>
+            </div>
+                @Html.ValidationMessageFor(r=>r.Email)
+            <div class="footer">
+                <button type="submit" class="btn bg-olive btn-block">Sign me in</button>
+                <p><a href="#">I forgot my password</a></p>
+            </div>
+        }
+    </div>
+
+</div>
+
+@(Html.When(JqueryBind.InitIncoding)
+          .Do()
+          .Direct()
+          .OnSuccess(dsl => dsl.WithName<SignInAccountCommand>(r => r.Password).Core().JQuery.Attributes.SetAttr(HtmlAttribute.Placeholder, "Your Password"))
+          .AsHtmlAttributes()
+          .ToDiv())
+
+<!-- ====================================================== END OF SIGN IN PAGE =========================================================== -->

@@ -1,0 +1,78 @@
+﻿@{
+
+    using (var template = Html.Incoding().Template<GetActionPlanDetailQuery.Response>())
+    {
+        using (var each = template.ForEach())
+        {
+            <div class="plan-content-item">
+                <div class="plan-caption date">
+                    @each.For(r => r.Date)
+                </div>
+            </div>
+            <!-- Reminders-->
+            <div class="plan-content-item">
+                <div class="plan-caption">
+                    Daily Reminders
+                </div>
+            </div>
+            @(Html.When(JqueryBind.InitIncoding)
+                  .AjaxGet(Url.Dispatcher().Query(new GetRemindersQuery { ActionPlanId = each.For(r => r.Id) }).AsJson())
+                  .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan/Reminder_Tmpl.cshtml")).Html())
+                  .AsHtmlAttributes(new { @class = "activeElement" })
+                  .ToDiv())
+            <!-- Monitors -->
+            <div class="plan-content-item">
+                <div class="plan-caption">
+                    Active Monitors
+                </div>
+            </div>
+            @(Html.When(JqueryBind.InitIncoding)
+                  .AjaxGet(Url.Dispatcher().Query(new GetMonitoringsQuery { ActionPlanId = each.For(r => r.Id) }).AsJson())
+                  .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan/Monitoring_Tmpl.cshtml")).Html())
+                  .AsHtmlAttributes(new { @class = "activeElement" })
+                  .ToDiv())
+            <!-- Appointments -->
+            <div class="plan-content-item">
+                <div class="plan-caption">
+                    Upcoming Appointments
+                </div>
+            </div>
+            @(Html.When(JqueryBind.InitIncoding)
+                  .AjaxGet(Url.Dispatcher().Query(new GetAppointmentsQuery
+                                                      {
+                                                              ActionPlanId = each.For(r => r.Id),
+                                                              IsCarePlan = false
+                                                      }).AsJson())
+                  .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan/Appointements_Tmpl.cshtml")).Html())
+                  .AsHtmlAttributes(new { @class = "activeElement" })
+                  .ToDiv())
+            <!-- Care Support Team -->
+            <div class="plan-content-item">
+                <div class="plan-caption">
+                    Care Support Team
+                </div>
+            </div>
+            @(Html.When(JqueryBind.InitIncoding)
+                  .AjaxGet(Url.Dispatcher().Query(new GetAppointmentsQuery
+                                                      {
+                                                              ActionPlanId = each.For(r => r.Id),
+                                                              IsCarePlan = true
+                                                      }).AsJson())
+                  .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan/CarePlans_Tmpl.cshtml")).Html())
+                  .AsHtmlAttributes(new { @class = "activeElement" })
+                  .ToDiv())
+            <div style="height: 100px; width: 100%;">        
+            </div>
+            <!-- ----- Rechedule Button ----- -->
+            <input type="button" class="btn-calendar"/>
+            @*<input type="button" class="btn-rechedule" value="Rechedule"/>*@
+            <!-- ===================================== Bottom Menu =============================================== -->
+            <div class="bottom-menu">
+                <a href="#" class="btn-support pull-left">Care Support</a>
+                <a href="#" class="btn-contacts pull-right">Edit Contacts</a>
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.box -->
+        }
+    }
+}

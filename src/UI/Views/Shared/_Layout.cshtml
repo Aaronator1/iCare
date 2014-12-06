@@ -1,0 +1,32 @@
+@using Incoding.MvcContrib
+<!DOCTYPE html>
+<html >
+    <head>
+        <link rel='stylesheet' type="text/css" href="~/Content/css/project.css" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900,100italic,300italic,400italic,500italic,700italic,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap.min.css")" />
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/jQueryUI/jquery-ui-1.10.3.custom.min.css")" />
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/font-awesome.min.css")" />                 
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/ionicons.min.css")" />                 
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/AdminLTE.css")" />
+        <link rel="stylesheet" href="@Url.Content("~/Content/css/site.css")" />                 
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/underscore.min.js")"> </script>                
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.form.min.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.history.js")"> </script>        
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.min.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/handlebars-1.1.2.js")"> </script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/incoding.framework.min.js")"> </script>   
+        <script type="text/javascript" src="@Url.Content("~/Scripts/incoding.meta.language.contrib.js")"> </script>   
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>                   
+        <script>
+            TemplateFactory.Version = '@Guid.NewGuid().ToString()';
+        </script>        
+    </head>
+    @Html.Incoding().RenderDropDownTemplate()
+    <body class="skin-blue">        
+        @RenderBody()
+    </body>
+</html>

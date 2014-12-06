@@ -1,0 +1,23 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetAppointmentsQuery.Response>())
+    {
+        <table class="table table-bordered">
+            @using (var each = template.ForEach())
+            {
+                <div class="plan-content-item">
+                    <div class="checkbox-item appointment pull-right">
+                        <p class="appointment-date">@each.For(r => r.Staff)</p>
+                        <p class="appointment-name">@each.For(r => r.Name)</p>
+                        <p class="appointment-phone">@each.For(r => r.Phone)</p>
+                    </div>
+                    @(Html.When(JqueryBind.Click)
+                          .AjaxPost(Url.Dispatcher().Push(new ToggleAppointmentOnReminderToActionPlanCommand { Id = each.For(r => r.Id) }))
+                          .OnSuccess(dsl => dsl.Self().Core().JQuery.Attributes.ToggleClass("active"))
+                          .AsHtmlAttributes(new { @class = "art-checkbox " + @each.IsInline(r => r.Checked, "active") + " pull-right" })
+                          .ToDiv())                    
+                    <div class="clearfix"></div>
+                </div>
+            }
+        </table>
+    }
+}

@@ -1,0 +1,44 @@
+﻿@model AddOrEditMonitoringCommand
+
+@using (Html.Hack().BeginForm(setting =>
+                                  {
+                                      setting.CloseDialog = true;
+                                      setting.TriggerTo = Selector.Jquery.Class("activeElement");
+                                  }))
+{
+    @Html.HiddenFor(r=>r.ActionPlanId)
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Monitor Type</label>
+        <div class="controls">
+            @Html.DropDownListFor(r => r.Type, typeof(Monitoring.MonitorOfType).ToSelectList())
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Maximum</label>
+        <div class="controls">
+            @Html.TextBoxFor(r => r.Max)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputPassword">Minimum</label>
+        <div class="controls">
+            @Html.TextBoxFor(r => r.Min)
+        </div>
+    </div>
+    @Html.ValidationMessageFor(r=>r.Max)
+    <div class="clearfix"></div>
+    <hr/>
+     @(Html.When(JqueryBind.Click)
+     .PreventDefault()
+     .StopPropagation()
+     .Direct()
+     .OnSuccess(dsl => dsl.WithId("dialog").JqueryUI().Dialog.Close())
+     .AsHtmlAttributes(new { @class="btn btn-danger btn-lg"})
+     .ToButton("Cancel"))
+    <input type="submit" class="btn btn-primary btn-lg" value="Save" />
+}
+
+
+
+
+

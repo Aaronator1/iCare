@@ -1,0 +1,15 @@
+﻿@{
+    using (var template = Html.Incoding().Template<GetMonitoringsQuery.Response>())
+    {
+        using (var each = template.ForEach())
+        {
+            <div class="plan-content-item">
+                <div class="checkbox-item pull-right">
+                    @each.For(r=>r.Type)
+                </div>
+                <div class="art-indicator @each.For(r => r.Status) active pull-right"></div>
+                <div class="clearfix"></div>
+            </div>
+        }
+    }
+}

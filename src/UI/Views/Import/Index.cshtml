@@ -1,0 +1,35 @@
+﻿@using Grid.Extensions
+@using Incoding.CQRS
+@{
+    Layout = "~/Views/Shared/_Content.cshtml";
+}
+@section Title
+{
+    Import Data
+}
+
+@section Body
+{
+     @(Html.When(JqueryBind.Click)
+              .AjaxGet(Url.Dispatcher().Query(new GetAccountsQuery(){Type = Account.AccountOfType.Patient}).AsView("~/Views/Import/Add.cshtml"))
+              .OnSuccess(r =>
+                             {
+                                 r.WithId("dialog").Core().Insert.Html();
+                                 r.WithId("dialog").JqueryUI().Dialog.Open(settings => settings.Title = "Set Data");                                        
+                             })
+              .AsHtmlAttributes(new {@class="btn btn-default pull-right"})
+
+              .ToButton(@<text>
+                             <i class="fa fa-plus"></i> Set Data
+                         </text>))
+    @(Html.Grid<GetValueOnMonitorQuery.Response>()
+    .Name(typeof(GetValueOnMonitorQuery).Name)
+     .Columns(clm =>
+                   {
+                       clm.Bound(r => r.Patient);
+                       clm.Bound(r => r.Type);
+                       clm.Bound(r => r.Value);
+                   })
+    .AjaxGet(Url.Dispatcher().Query(new GetValueOnMonitorQuery()).AsJson()))
+   
+}

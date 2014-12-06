@@ -1,0 +1,10 @@
+﻿@model GetActionPlanDetailQuery
+
+@(Html.When(JqueryBind.InitIncoding)
+      .AjaxGet(Url.Dispatcher().Query(new GetActionPlanDetailQuery
+                                          {
+                                                  Id = Model.Id
+                                          }).AsJson())
+      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplateByUrl(Url.Dispatcher().AsView("~/Views/ActionPlan_Edit/CarePlan_Detail_Tmpl.cshtml")).Html())
+      .AsHtmlAttributes()
+      .ToDiv())
